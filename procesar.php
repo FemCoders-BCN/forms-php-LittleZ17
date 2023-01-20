@@ -11,7 +11,8 @@
     $arch2 = $_FILES["arch2"];
     $arch3 = $_FILES["arch3"];
 
-    $patch = $_SERVER["DOCUMENT_ROOT"] . "/forms-php-LittleZ17/phpimagenes" . "/". $arch1["name"];
+
+    $patch = "./phpimagenes/";
     
      
     echo"<p> NOMBRE: $name</p>";
@@ -35,10 +36,35 @@
      var_dump($arch3);
     //  echo $patch;
 
-    move_uploaded_file($arch1["tmp_name"], $patch);
-    move_uploaded_file($arch2["tmp_name"], $patch);
-    move_uploaded_file($arch3["tmp_name"], $patch);
-  
+ $file = $patch . basename($_FILES['fichero_usuario']['name']);
+ 
+if(move_uploaded_file($_FILES["fichero_usuario"]['tmp_name'], $patch)){
+   echo "El archivo es valido y se subió con exito.!";
+}
+
+if (is_uploaded_file($FILES['files']['tmp_name'])){
+   $folder = './phpimagenes/';
+   $id = time();
+   $filename = $id . '-' . $_FILES['files']['name'];
+   move_uploaded_file($FILES['files']['tmp_name'], $folder . $filename);
+}else{
+   echo "Ha fallado la subida del archivo!";
+}
+
+
+if (is_uploaded_file($FILES['filesValidate']['tmp_name'])){
+   $folder = './phpimagenes/';
+   $filename = $_FILES['filesValidate']['name'];
+$namefinal = $folder . $filename;
+if(is_file($namefinal)){
+   $id = time();
+   $filename = $id . '-' . $_FILES['files']['name'];
+}
+move_uploaded_file($FILES['files']['tmp_name'], $folder . $filename);
+}else{
+   echo "Ha fallado la subida del archivo!";
+}
+
 
   
 
